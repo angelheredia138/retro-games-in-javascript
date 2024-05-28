@@ -47,12 +47,23 @@ const Minesweeper = () => {
     );
   };
   
+  function getRandomInt(max) {
+    return Math.floor(Math.random() * max);
+  };
+
+
   const createEmptyGrid = (rows, cols) => {
     const grid = [];
     for (let i = 0; i < rows; i++) {
+      console.log(`Bomb at: (${getRandomInt(rows)}, ${getRandomInt(cols)})`);
       grid.push(Array(cols).fill(null));
     }
+    // for (let i = 0; i < rows; i++) {
+    //   console.log(`Bomb at: (${getRandomInt(rows)}, ${getRandomInt(cols)})`);
+    //   grid.push(Array(cols).fill(null));
+    // }
     return grid;
   };
+
   
   export default Minesweeper;
