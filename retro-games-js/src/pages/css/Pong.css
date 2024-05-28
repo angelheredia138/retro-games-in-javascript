@@ -1,69 +1,30 @@
-/* src/Pong.css */
+/* src/css/Pong.css */
 .pong-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-  }
-  
-  .difficulty-selection {
-    text-align: center;
-  }
-  
-  .difficulty-selection button {
-    margin: 10px;
-    padding: 10px 20px;
-    font-size: 16px;
-    cursor: pointer;
-    border: none;
-    background-color: #61dafb;
-    color: white;
-    border-radius: 5px;
-    transition: background-color 0.3s ease;
-  }
-  
-  .difficulty-selection button:hover {
-    background-color: #21a1f1;
-  }
-  
-  .pong {
-    display: inline-block;
-    border: 2px solid #555;
-  }
-  
-  .row {
-    display: flex;
-  }
-  
-  .cell {
-    width: 30px;
-    height: 30px;
-    background-color: #ddd;
-    border: 1px solid #999;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-  }
-  
-  .cell:hover {
-    background-color: #bbb;
-  }
-  
-  .pong-container button {
-    margin: 10px;
-    padding: 10px 20px;
-    font-size: 16px;
-    cursor: pointer;
-    border: none;
-    background-color: #61dafb;
-    color: white;
-    border-radius: 5px;
-    transition: background-color 0.3s ease;
-  }
-  
-  .pong-container button:hover {
-    background-color: #21a1f1;
-  }
-  
+  text-align: center;
+  color: white;
+}
+
+.pong-container button {
+  margin: 10px;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  border: none;
+  background-color: #61dafb;
+  color: white;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.pong-container button:hover {
+  background-color: #21a1f1;
+}
+
+h4 {
+  margin: 0;
+}
+
+canvas {
+  margin-top: 10px;
+  border: 2px solid white;
+}
