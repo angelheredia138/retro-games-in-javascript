@@ -1,7 +1,7 @@
 // src/Minesweeper.jsx
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import './css/Minesweeper.css';
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import "./css/Minesweeper.css";
 
 const Minesweeper = () => {
   const navigate = useNavigate();
@@ -23,7 +23,7 @@ const Minesweeper = () => {
       setIsGameOver(true);
     } else {
       // Reveal cells recursively
-      setGrid(prevGrid => {
+      setGrid((prevGrid) => {
         const newGrid = [...prevGrid];
         revealCells(newGrid, row, col);
         if (checkWin(newGrid)) {
@@ -39,7 +39,7 @@ const Minesweeper = () => {
     event.preventDefault(); // Prevent the default context menu
     if (isGameOver || grid[row][col].isRevealed) return;
 
-    setGrid(prevGrid => {
+    setGrid((prevGrid) => {
       const newGrid = [...prevGrid];
       newGrid[row][col].isFlagged = !newGrid[row][col].isFlagged;
       return newGrid;
@@ -47,9 +47,9 @@ const Minesweeper = () => {
   };
 
   const revealAllMines = () => {
-    setGrid(prevGrid => {
-      const newGrid = prevGrid.map(row =>
-        row.map(cell => ({
+    setGrid((prevGrid) => {
+      const newGrid = prevGrid.map((row) =>
+        row.map((cell) => ({
           ...cell,
           isRevealed: cell.isMine || cell.isRevealed,
         }))
@@ -71,7 +71,7 @@ const Minesweeper = () => {
 
   return (
     <div className="minesweeper-container">
-      <button onClick={() => navigate('/')}>Back to Home</button>
+      <button onClick={() => navigate("/")}>Back to Home</button>
       {!grid && (
         <div className="difficulty-selection">
           <h2>Select Difficulty</h2>
@@ -88,12 +88,19 @@ const Minesweeper = () => {
               {row.map((cell, colIndex) => (
                 <div
                   key={colIndex}
-                  className={`cell ${cell.isRevealed ? 'revealed' : ''}`}
+                  className={`cell ${cell.isRevealed ? "revealed" : ""}`}
                   onClick={() => handleClick(rowIndex, colIndex)}
-                  onContextMenu={(event) => handleRightClick(event, rowIndex, colIndex)}
+                  onContextMenu={(event) =>
+                    handleRightClick(event, rowIndex, colIndex)
+                  }
                 >
-                  {cell.isRevealed && (cell.isMine ? '💣' : cell.adjacentMines > 0 ? cell.adjacentMines : '')}
-                  {cell.isFlagged && !cell.isRevealed && '🚩'}
+                  {cell.isRevealed &&
+                    (cell.isMine
+                      ? "💣"
+                      : cell.adjacentMines > 0
+                      ? cell.adjacentMines
+                      : "")}
+                  {cell.isFlagged && !cell.isRevealed && "🚩"}
                 </div>
               ))}
             </div>
@@ -102,13 +109,29 @@ const Minesweeper = () => {
       )}
       {(isGameOver || isWin) && (
         <div className="game-over">
-          <h2>{isWin ? 'You Win!' : 'Game Over'}</h2>
-          <button onClick={() => handleStartGame(grid.length, grid[0].length, grid.flat().filter(cell => cell.isMine).length)}>Restart</button>
+          <h2>{isWin ? "You Win!" : "Game Over"}</h2>
+          <button
+            onClick={() =>
+              handleStartGame(
+                grid.length,
+                grid[0].length,
+                grid.flat().filter((cell) => cell.isMine).length
+              )
+            }
+          >
+            Restart
+          </button>
           {isWin && (
             <div>
-              <button onClick={() => handleStartGame(8, 8, 10)}>Try Easy</button>
-              <button onClick={() => handleStartGame(9, 9, 10)}>Try Medium</button>
-              <button onClick={() => handleStartGame(10, 10, 10)}>Try Hard</button>
+              <button onClick={() => handleStartGame(8, 8, 10)}>
+                Try Easy
+              </button>
+              <button onClick={() => handleStartGame(9, 9, 10)}>
+                Try Medium
+              </button>
+              <button onClick={() => handleStartGame(10, 10, 10)}>
+                Try Hard
+              </button>
             </div>
           )}
         </div>
@@ -121,12 +144,14 @@ const createEmptyGrid = (rows, cols, minesCount) => {
   const grid = [];
   for (let i = 0; i < rows; i++) {
     grid.push(
-      Array(cols).fill().map(() => ({
-        isMine: false,
-        isRevealed: false,
-        isFlagged: false,
-        adjacentMines: 0,
-      }))
+      Array(cols)
+        .fill()
+        .map(() => ({
+          isMine: false,
+          isRevealed: false,
+          isFlagged: false,
+          adjacentMines: 0,
+        }))
     );
   }
 
@@ -149,16 +174,27 @@ const createEmptyGrid = (rows, cols, minesCount) => {
 
 const countAdjacentMines = (grid, row, col) => {
   const directions = [
-    [-1, -1], [-1, 0], [-1, 1],
-    [0, -1],           [0, 1],
-    [1, -1], [1, 0], [1, 1]
+    [-1, -1],
+    [-1, 0],
+    [-1, 1],
+    [0, -1],
+    [0, 1],
+    [1, -1],
+    [1, 0],
+    [1, 1],
   ];
 
   let count = 0;
   for (let [dx, dy] of directions) {
     const newRow = row + dx;
     const newCol = col + dy;
-    if (newRow >= 0 && newRow < grid.length && newCol >= 0 && newCol < grid[0].length && grid[newRow][newCol].isMine) {
+    if (
+      newRow >= 0 &&
+      newRow < grid.length &&
+      newCol >= 0 &&
+      newCol < grid[0].length &&
+      grid[newRow][newCol].isMine
+    ) {
       count++;
     }
   }
@@ -168,16 +204,21 @@ const countAdjacentMines = (grid, row, col) => {
 
 const revealCells = (grid, row, col) => {
   const directions = [
-    [-1, -1], [-1, 0], [-1, 1],
-    [0, -1],           [0, 1],
-    [1, -1], [1, 0], [1, 1]
+    [-1, -1],
+    [-1, 0],
+    [-1, 1],
+    [0, -1],
+    [0, 1],
+    [1, -1],
+    [1, 0],
+    [1, 1],
   ];
 
   const stack = [[row, col]];
   while (stack.length) {
     const [currentRow, currentCol] = stack.pop();
     if (grid[currentRow][currentCol].isRevealed) continue;
-    
+
     grid[currentRow][currentCol].isRevealed = true;
     const adjacentMines = countAdjacentMines(grid, currentRow, currentCol);
     grid[currentRow][currentCol].adjacentMines = adjacentMines;
@@ -186,7 +227,13 @@ const revealCells = (grid, row, col) => {
       for (let [dx, dy] of directions) {
         const newRow = currentRow + dx;
         const newCol = currentCol + dy;
-        if (newRow >= 0 && newRow < grid.length && newCol >= 0 && newCol < grid[0].length && !grid[newRow][newCol].isRevealed) {
+        if (
+          newRow >= 0 &&
+          newRow < grid.length &&
+          newCol >= 0 &&
+          newCol < grid[0].length &&
+          !grid[newRow][newCol].isRevealed
+        ) {
           stack.push([newRow, newCol]);
         }
       }

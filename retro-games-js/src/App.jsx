@@ -1,11 +1,11 @@
-import React from 'react';
-import { Routes, Route } from 'react-router-dom';
-import Home from './pages/Home';
-import Pong from './pages/Pong';
-import Tetris from './pages/Tetris';
-import Game2048 from './pages/Game2048';
-import Snake from './pages/Snake';
-import Minesweeper from './pages/Minesweeper';
+import React from "react";
+import { Routes, Route } from "react-router-dom";
+import Home from "./pages/Home";
+import Pong from "./pages/Pong";
+import Tetris from "./pages/Tetris";
+import Game2048 from "./pages/Game2048";
+import Snake from "./pages/Snake";
+import Minesweeper from "./pages/Minesweeper";
 
 function App() {
   return (
