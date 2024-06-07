@@ -1,6 +1,6 @@
-// src/Minesweeper.jsx
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { Box, Typography, Button, Grid } from "@mui/material";
 import "./css/Minesweeper.css";
 
 const Minesweeper = () => {
@@ -70,47 +70,90 @@ const Minesweeper = () => {
   };
 
   return (
-    <div className="minesweeper-container">
-      <button onClick={() => navigate("/")}>Back to Home</button>
+    <Box sx={{ p: 4 }}>
+      <Button
+        onClick={() => navigate("/")}
+        variant="contained"
+        sx={buttonStyle}
+      >
+        Back to Home
+      </Button>
       {!grid && (
-        <div className="difficulty-selection">
-          <h2>Select Difficulty</h2>
-          <button onClick={() => handleStartGame(8, 8, 10)}>Easy</button>
-          <button onClick={() => handleStartGame(9, 9, 10)}>Medium</button>
-          <button onClick={() => handleStartGame(10, 10, 10)}>Hard</button>
-        </div>
+        <Box sx={{ textAlign: "center", mt: 4 }}>
+          <Typography variant="h4" gutterBottom>
+            Select Difficulty
+          </Typography>
+          <Button
+            onClick={() => handleStartGame(8, 8, 10)}
+            variant="contained"
+            sx={buttonStyle}
+          >
+            Easy
+          </Button>
+          <Button
+            onClick={() => handleStartGame(9, 9, 10)}
+            variant="contained"
+            sx={buttonStyle}
+          >
+            Medium
+          </Button>
+          <Button
+            onClick={() => handleStartGame(10, 10, 10)}
+            variant="contained"
+            sx={buttonStyle}
+          >
+            Hard
+          </Button>
+        </Box>
       )}
       {grid && (
-        <div className="minesweeper">
-          <h2>Minesweeper</h2>
-          {grid.map((row, rowIndex) => (
-            <div key={rowIndex} className="row">
-              {row.map((cell, colIndex) => (
-                <div
-                  key={colIndex}
-                  className={`cell ${cell.isRevealed ? "revealed" : ""}`}
-                  onClick={() => handleClick(rowIndex, colIndex)}
-                  onContextMenu={(event) =>
-                    handleRightClick(event, rowIndex, colIndex)
-                  }
-                >
-                  {cell.isRevealed &&
-                    (cell.isMine
-                      ? "💣"
-                      : cell.adjacentMines > 0
-                      ? cell.adjacentMines
-                      : "")}
-                  {cell.isFlagged && !cell.isRevealed && "🚩"}
-                </div>
-              ))}
-            </div>
-          ))}
-        </div>
+        <Box sx={{ textAlign: "center" }}>
+          <Typography variant="h4" gutterBottom>
+            Minesweeper
+          </Typography>
+          <Grid container spacing={0} justifyContent="center">
+            {grid.map((row, rowIndex) => (
+              <Grid item key={rowIndex} container justifyContent="center">
+                {row.map((cell, colIndex) => (
+                  <Box
+                    key={colIndex}
+                    className={`cell ${cell.isRevealed ? "revealed" : ""}`}
+                    sx={{
+                      width: 40,
+                      height: 40,
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      border: "1px solid black",
+                      cursor: "pointer",
+                      backgroundColor: cell.isRevealed ? "#e0e0e0" : "#9e9e9e",
+                      color: cell.isMine ? "red" : "black",
+                    }}
+                    onClick={() => handleClick(rowIndex, colIndex)}
+                    onContextMenu={(event) =>
+                      handleRightClick(event, rowIndex, colIndex)
+                    }
+                  >
+                    {cell.isRevealed &&
+                      (cell.isMine
+                        ? "💣"
+                        : cell.adjacentMines > 0
+                        ? cell.adjacentMines
+                        : "")}
+                    {cell.isFlagged && !cell.isRevealed && "🚩"}
+                  </Box>
+                ))}
+              </Grid>
+            ))}
+          </Grid>
+        </Box>
       )}
       {(isGameOver || isWin) && (
-        <div className="game-over">
-          <h2>{isWin ? "You Win!" : "Game Over"}</h2>
-          <button
+        <Box sx={{ textAlign: "center", mt: 4 }}>
+          <Typography variant="h4">
+            {isWin ? "You Win!" : "Game Over"}
+          </Typography>
+          <Button
             onClick={() =>
               handleStartGame(
                 grid.length,
@@ -118,25 +161,39 @@ const Minesweeper = () => {
                 grid.flat().filter((cell) => cell.isMine).length
               )
             }
+            variant="contained"
+            sx={buttonStyle}
           >
             Restart
-          </button>
+          </Button>
           {isWin && (
-            <div>
-              <button onClick={() => handleStartGame(8, 8, 10)}>
+            <Box>
+              <Button
+                onClick={() => handleStartGame(8, 8, 10)}
+                variant="contained"
+                sx={buttonStyle}
+              >
                 Try Easy
-              </button>
-              <button onClick={() => handleStartGame(9, 9, 10)}>
+              </Button>
+              <Button
+                onClick={() => handleStartGame(9, 9, 10)}
+                variant="contained"
+                sx={buttonStyle}
+              >
                 Try Medium
-              </button>
-              <button onClick={() => handleStartGame(10, 10, 10)}>
+              </Button>
+              <Button
+                onClick={() => handleStartGame(10, 10, 10)}
+                variant="contained"
+                sx={buttonStyle}
+              >
                 Try Hard
-              </button>
-            </div>
+              </Button>
+            </Box>
           )}
-        </div>
+        </Box>
       )}
-    </div>
+    </Box>
   );
 };
 
@@ -239,6 +296,22 @@ const revealCells = (grid, row, col) => {
       }
     }
   }
+};
+
+const buttonStyle = {
+  margin: "10px",
+  padding: "10px 20px",
+  fontSize: "16px",
+  fontWeight: "bold",
+  cursor: "pointer",
+  border: "none",
+  backgroundColor: "#065535",
+  color: "white",
+  borderRadius: "5px",
+  transition: "background-color 0.3s ease",
+  "&:hover": {
+    backgroundColor: "#21a1f1",
+  },
 };
 
 export default Minesweeper;

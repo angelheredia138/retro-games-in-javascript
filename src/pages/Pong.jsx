@@ -1,6 +1,6 @@
-// src/PongGame.jsx
 import React, { useRef, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { Box, Typography, Button, Select, MenuItem } from "@mui/material";
 import "./css/Pong.css";
 
 const Pong = () => {
@@ -197,28 +197,47 @@ const Pong = () => {
   };
 
   return (
-    <div className="pong-container">
+    <Box sx={{ p: 4, textAlign: "center", fontFamily: "Arial, sans-serif" }}>
       {!gameStarted && winner && (
-        <div className="winner-screen">
-          <h2>{winner}</h2>
-          <button onClick={handleStart}>Start Game</button>
-          <div className="difficulty-selection">
-            <button onClick={() => handleDifficultySelect("easy")}>Easy</button>
-            <button onClick={() => handleDifficultySelect("medium")}>
+        <Box className="winner-screen">
+          <Typography variant="h4">{winner}</Typography>
+          <Button onClick={handleStart} sx={buttonStyle}>
+            Start Game
+          </Button>
+          <Box className="difficulty-selection">
+            <Button
+              onClick={() => handleDifficultySelect("easy")}
+              sx={buttonStyle}
+            >
+              Easy
+            </Button>
+            <Button
+              onClick={() => handleDifficultySelect("medium")}
+              sx={buttonStyle}
+            >
               Medium
-            </button>
-            <button onClick={() => handleDifficultySelect("hard")}>Hard</button>
-          </div>
-        </div>
+            </Button>
+            <Button
+              onClick={() => handleDifficultySelect("hard")}
+              sx={buttonStyle}
+            >
+              Hard
+            </Button>
+          </Box>
+        </Box>
       )}
-      <button onClick={() => navigate("/")}>Back to Home</button>
-      <h2>Pong</h2>
-      <h3>
+      <Button onClick={() => navigate("/")} sx={buttonStyle}>
+        Back to Home
+      </Button>
+      <Typography variant="h4" fontWeight={"bold"}>
+        Pong
+      </Typography>
+      <Typography variant="h6">
         Game ends at 20 points (if the game starts lagging, try refreshing!)
-      </h3>
-      <h4>
+      </Typography>
+      <Typography variant="h6">
         Score: Human {humanScore} - AI {aiScore}
-      </h4>
+      </Typography>
       <canvas
         ref={canvasRef}
         width="800"
@@ -226,17 +245,48 @@ const Pong = () => {
         style={{ border: "1px solid white" }}
       />
       {!gameStarted && !winner && (
-        <div className="difficulty-selection">
-          <h2>Select Difficulty</h2>
-          <button onClick={() => handleDifficultySelect("easy")}>Easy</button>
-          <button onClick={() => handleDifficultySelect("medium")}>
+        <Box className="">
+          <Typography variant="h5" paddingTop={"10px"}>
+            Select Difficulty
+          </Typography>
+          <Button
+            onClick={() => handleDifficultySelect("easy")}
+            sx={buttonStyle}
+          >
+            Easy
+          </Button>
+          <Button
+            onClick={() => handleDifficultySelect("medium")}
+            sx={buttonStyle}
+          >
             Medium
-          </button>
-          <button onClick={() => handleDifficultySelect("hard")}>Hard</button>
-        </div>
+          </Button>
+          <Button
+            onClick={() => handleDifficultySelect("hard")}
+            sx={buttonStyle}
+          >
+            Hard
+          </Button>
+        </Box>
       )}
-    </div>
+    </Box>
   );
+};
+
+const buttonStyle = {
+  margin: "10px",
+  padding: "10px 20px",
+  fontSize: "16px",
+  fontWeight: "bold", // Make the font bold
+  cursor: "pointer",
+  border: "none",
+  backgroundColor: "#065535",
+  color: "white",
+  borderRadius: "5px",
+  transition: "background-color 0.3s ease",
+  "&:hover": {
+    backgroundColor: "#21a1f1",
+  },
 };
 
 export default Pong;

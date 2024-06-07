@@ -1,5 +1,6 @@
 import React, { useRef, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { Box, Typography, Button } from "@mui/material";
 import "./css/Game2048.css";
 
 const Game2048 = () => {
@@ -192,17 +193,39 @@ const Game2048 = () => {
   }, [grid, initialized]);
 
   return (
-    <div className="game2048-container">
-      <h2>2048</h2>
+    <Box sx={{ p: 4, textAlign: "center", fontFamily: "Arial, sans-serif" }}>
+      <Typography variant="h4" fontWeight={"bold"}>
+        2048
+      </Typography>
       <canvas
         ref={canvasRef}
         width={gridSize * cellSize}
         height={gridSize * cellSize}
         style={{ border: "1px solid white" }}
       />
-      <button onClick={() => navigate("/")}>Back to Home</button>
-    </div>
+      <Box sx={{ display: "flex", justifyContent: "center", mt: 2 }}>
+        <Button onClick={() => navigate("/")} sx={buttonStyle}>
+          Back to Home
+        </Button>
+      </Box>
+    </Box>
   );
+};
+
+const buttonStyle = {
+  margin: "10px",
+  padding: "10px 20px",
+  fontSize: "16px",
+  fontWeight: "bold", // Make the font bold
+  cursor: "pointer",
+  border: "none",
+  backgroundColor: "#065535",
+  color: "white",
+  borderRadius: "5px",
+  transition: "background-color 0.3s ease",
+  "&:hover": {
+    backgroundColor: "#21a1f1",
+  },
 };
 
 export default Game2048;

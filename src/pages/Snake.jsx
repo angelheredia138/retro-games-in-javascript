@@ -1,5 +1,6 @@
 import React, { useRef, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { Box, Typography, Button } from "@mui/material";
 import "./css/Snake.css";
 
 const Snake = () => {
@@ -196,32 +197,62 @@ const Snake = () => {
   };
 
   return (
-    <div className="snake-container">
-      <h2>Snake</h2>
-      <h3>Eat 100 pellets to win!</h3>
-      <h4>Press esc to pause, and WASD to move the snake!</h4>
+    <Box sx={{ p: 4, textAlign: "center", fontFamily: "Arial, sans-serif" }}>
+      <Typography variant="h3" fontWeight={"bold"}>
+        Snake
+      </Typography>
+      <Typography variant="h6" paddingTop={"10px"}>
+        Eat 100 pellets to win!
+      </Typography>
+      <Typography variant="h6" paddingTop={"10px"}>
+        Press esc to pause, and WASD to move the snake!
+      </Typography>
       <canvas
         ref={canvasRef}
         width="800"
         height="600"
         style={{ border: "1px solid white" }}
       />
-      {paused && <h3>Game Paused</h3>}
+      {paused && <Typography variant="h4">Game Paused</Typography>}
       {gameOver && gameWin && (
-        <div className="game-win-screen">
-          <h2>Game Win!</h2>
-          <button onClick={handleRestart}>Restart</button>
-        </div>
+        <Box className="game-win-screen">
+          <Typography variant="h4">Game Win!</Typography>
+          <Button onClick={handleRestart} sx={buttonStyle}>
+            Restart
+          </Button>
+        </Box>
       )}
       {gameOver && !gameWin && (
-        <div className="game-over-screen">
-          <h2>Game Over</h2>
-          <button onClick={handleRestart}>Restart</button>
-        </div>
+        <Box className="game-over-screen">
+          <Typography variant="h4">Game Over</Typography>
+          <Button onClick={handleRestart} sx={buttonStyle}>
+            Restart
+          </Button>
+        </Box>
       )}
-      <button onClick={() => navigate("/")}>Back to Home</button>
-    </div>
+      <Box sx={{ display: "flex", justifyContent: "center", mt: 2 }}>
+        <Button onClick={() => navigate("/")} sx={buttonStyle}>
+          Back to Home
+        </Button>
+      </Box>
+    </Box>
   );
+};
+
+const buttonStyle = {
+  margin: "10px",
+  padding: "10px 20px",
+  fontSize: "16px",
+  fontWeight: "bold", // Make the font bold
+  cursor: "pointer",
+  border: "none",
+  backgroundColor: "#065535",
+  color: "white",
+  borderRadius: "5px",
+  transition: "background-color 0.3s ease",
+  "&:hover": {
+    backgroundColor: "#21a1f1",
+  },
 };
 
 export default Snake;
